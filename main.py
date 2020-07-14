@@ -89,45 +89,7 @@ class App(QFrame):
         self.container.layout = QStackedLayout()
         self.container.setLayout(self.container.layout)
         if self.tabcount == 0:
-            i = self.tabcount
-            self.tabs.append(QWidget())
-            self.tabs[i].layout = QVBoxLayout()
-            self.tabs[i].layout.setContentsMargins(0, 0, 0, 0)
-            self.tabs[i].setObjectName("tab" + str(i))
-
-            # Open web view
-            self.tabs[i].content = QWebEngineView()
-            self.tabs[i].content.load(QUrl.fromUserInput("https://www.google.com"))
-
-            self.tabs[i].content1 = QWebEngineView()
-            self.tabs[i].content1.load(QUrl.fromUserInput("https://www.google.com"))
-
-            # set tab at top of the screen
-            self.tabbar.addTab("New Tab")
-            self.tabbar.setTabData(i, {"object": "tab" + str(i), "initial": i})
-
-            self.tabs[i].content.titleChanged.connect(lambda: self.SetTabContent(i, "title"))
-            self.tabs[i].content.iconChanged.connect(lambda: self.SetTabContent(i, "icon"))
-            self.tabs[i].content.urlChanged.connect(lambda: self.SetTabContent(i, "url"))
-
-            # Add Widget to tab layout
-            self.tabs[i].splitview = QSplitter()
-            # self.tabs[i].splitview.setOrientation(Qt.Vertical)
-            self.tabs[i].layout.addWidget(self.tabs[i].splitview)
-
-            self.tabs[i].splitview.addWidget(self.tabs[i].content)
-            self.tabs[i].splitview.addWidget(self.tabs[i].content1)
-
-            # set top level tab from [] to layout
-            self.tabs[i].setLayout(self.tabs[i].layout)
-
-            # Add Tab to top level stacked widget
-            self.container.layout.addWidget(self.tabs[i])
-            self.container.layout.setCurrentWidget(self.tabs[i])
-
-            self.tabbar.setCurrentIndex(i)
-
-            self.tabcount += 1
+            self.AddTab()
 
         self.layout.addWidget(self.tabbar)
         self.layout.addWidget(self.Toolbar)
